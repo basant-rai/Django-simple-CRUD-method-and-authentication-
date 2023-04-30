@@ -1,0 +1,33 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="w-25 mx-auto">
+    <form method="POST" action="">
+      {% csrf_token %}
+      <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+      <div class="form-floating">
+        <input name="username" type="text" class="form-control" id="floatingInput" placeholder="username">
+        <label for="floatingInput">User Name</label>
+      </div>
+      <div class="form-floating mt-2">
+        <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+        <label for="floatingPassword">Password</label>
+      </div>
+
+      <input class="w-100 btn btn-lg btn-primary mt-2" type="submit" value="Login" />
+    </form>
+    
+    {% if messages %}
+    <ul class="text-decoration-none">
+      {% for message in messages %}
+      <li>
+        {{ message }}
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

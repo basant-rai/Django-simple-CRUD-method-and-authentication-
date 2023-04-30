@@ -1,0 +1,13 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="container mt-5">
+  <!-- <h1>Room Template</h1> -->
+  <div>
+    <h3 class="fw-bold"> {{room.name}}</h3>
+    <p class="text-primary">@{{room.host}}</p>
+    <p>{{room.description}}</p>
+  </div>
+
+</div>
+{% endblock %}

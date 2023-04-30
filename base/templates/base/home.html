@@ -1,0 +1,46 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="container">
+  <h1 class="fw-bold text-secondary mt-5 text-center">Home Template</h1>
+
+  <div class="row ">
+    <div class="col-2">
+      <!-- <div class="">
+        <a class="btn btn-outline-success" href="{% url 'create-room' %}">Create room</a>
+      </div> -->
+      <h4 class="fw-bold">Topics</h4>
+      <div class="border-top py-2">
+        <a class="text-decoration-none fs-5 text-black" href="{% url 'home' %}">All</a>
+        {% for topic in topics%}
+        <div>
+          <a class="text-decoration-none fs-5 text-black" href="{% url 'home' %}?q={{topic.name}}">{{topic}}</a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="col-10">
+      {% for room in rooms %}
+      <div class="">
+        <div class="mt-2">
+          <span>@{{room.host.username}}</span>
+          <h4>{{room.id}}) <a href="{% url 'room' room.id %}">{{room.name}}</a></h4>
+          <p class="fw-bold">{{room.topic}}</p>
+          <span class="fs-6">{{room.description}}</span>
+        </div>
+        {% if request.user == room.host %}
+        <div class="mt-2">
+          <a class="btn btn-secondary btn-sm" href="{% url 'update-room' room.id %}">Edit room</a>
+          <a class="btn btn-outline-danger btn-sm" href="{% url 'delete-room' room.id %}">Delete room</a>
+        </div>
+        {% endif %}
+        <hr />
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

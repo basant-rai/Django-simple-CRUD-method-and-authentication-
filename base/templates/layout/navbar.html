@@ -1,6 +1,8 @@
+{% load static %}
+
 <nav class="navbar navbar-expand-lg bg-body-secondary">
   <div class="container">
-    <a class="navbar-brand" href="#">Django</a>
+    <a class="navbar-brand fw-bold fs-4" href="{% url 'home' %}">Tech-Stuff</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -20,7 +22,18 @@
 
       <div class="nav-item">
         {% if request.user.is_authenticated %}
-        <a class="btn btn-outline-success" aria-current="page" href="{% url 'logout' %}">Logout</a>
+        <div class="dropdown">
+          <img class="dropdown-toggle rounded-circle" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+          height="40" width="40" src={{request.user.profile.user_profile.url}}/>
+          
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Profile</a></li>
+           
+            <li><a class="dropdown-item" aria-current="page" href="{% url 'logout' %}">Logout</a></li>
+          </ul>
+        </div>
+
+        
         {% else %}
         <a class="btn btn-outline-success" aria-current="page" href="{% url 'login' %}">Login</a>
         {% endif %}

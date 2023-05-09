@@ -2,11 +2,45 @@
 
 {% block content %}
 <div class="container mt-5">
-  <!-- <h1>Room Template</h1> -->
-  <div>
-    <h3 class="fw-bold"> {{room.name}}</h3>
-    <p class="text-primary">@{{room.host}}</p>
-    <p>{{room.description}}</p>
+  <div class="row">
+    <div class="col-9">
+      <div>
+        <h3 class="fw-bold"> {{room.name}}</h3>
+        <p class="text-primary">@{{room.host}}</p>
+        <p>{{room.description}}</p>
+      </div>
+      <div>
+        <h5 class="border-bottom">Comments</h5>
+        {% for message in messages %}
+        <div class="mt-2">
+          <div>
+            <span class="fw-bold fs-6">@{{message.user}}</span>
+            <span class="ms-1">{{message.body}}</span>
+          </div>
+          <small class="text-primary ms-1" style="font-size: 12px;">{{message.created|timesince}} ago</small>
+        </div>
+        {% endfor %}
+      </div>
+      {% if request.user.is_authenticated %}
+      <div class="mt-4 pt-2 border-top ">
+        <form method="POST" action="">
+          {% csrf_token %}
+          <div class="mb-3">
+            <textarea name="body" class="form-control" id="exampleFormControlTextarea1" rows="3"
+              placeholder="Add a discussion" required></textarea>
+          </div>
+
+          <input type="submit" class="btn btn-outline-success" value="Add" />
+
+        </form>
+      </div>
+      {% endif %}
+    </div>
+    <div class="col-3">
+      <div>
+        <!-- {% for} -->
+      </div>
+    </div>
   </div>
 
 </div>

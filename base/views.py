@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from .models import Room,Topic,User
+from .models import Room,Topic,User,Message
 from .forms import RoomForm
 from django.contrib.auth import authenticate, login,logout
 # Create your views here.
@@ -38,7 +38,7 @@ def logOut(request):
   return redirect('home')
 
 def home(request):
-  q= request.GET.get('q') if request.GET.get('q') != None else ''
+  q = request.GET.get('q') if request.GET.get('q') != None else ''
   rooms = Room.objects.filter(
     Q(topic__name__icontains=q)|
     Q(name__icontains=q)|
@@ -47,7 +47,7 @@ def home(request):
 
   topics = Topic.objects.all()
   room_count = rooms.count()
-  context = {'rooms':rooms,'topics':topics,'TOtalroom':room_count}
+  context = {'rooms':rooms,'topics':topics,'Totalroom':room_count}
   return render(request,'base/home.html',context)
   # return HttpResponse('Home page')
 
@@ -56,8 +56,17 @@ def rooms(request):
 
 def room(request, pk):
   room = Room.objects.get(id=pk)
-  context = {'room':room}
+  messages = room.message_set.all()
 
+  if request.method == 'POST':
+    message = Message.objects.create(
+      user = request.user,
+      room = room,
+      body = request.POST.get('body')
+    )
+    return redirect('room', pk=room.id)
+
+  context = {'room':room,'messages':messages}
   return render(request,'base/room.html',context)
 
 

@@ -14,7 +14,7 @@ class Room(models.Model):
   topic= models.ForeignKey(Topic,on_delete=models.SET_NULL, null=True)
   name = models.CharField(max_length=200)
   description = models.TextField(null=True,blank=True)
-  # participants = 
+  # participants = import os
   updated =models.DateTimeField(auto_now=True)
   created = models.DateTimeField(auto_now_add=True)
 
@@ -22,7 +22,7 @@ class Room(models.Model):
     ordering =['-updated','created']
 
   def __str__(self):
-     return self.name
+    return self.name
 
 class Message(models.Model):
   user = models.ForeignKey(User,on_delete=models.CASCADE)
@@ -33,4 +33,11 @@ class Message(models.Model):
 
 
   def __str__(self):
-      return self.body[0:50]
+    return self.body[0:50]
+
+class Profile(models.Model):
+  user = models.OneToOneField(User, null=True,on_delete=models.CASCADE)
+  user_profile = models.ImageField(null=True,blank=True )
+
+  # def __str__(self):
+  #   return self.user
